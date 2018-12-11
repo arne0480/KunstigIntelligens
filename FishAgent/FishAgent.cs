@@ -26,6 +26,7 @@ namespace FishAgent
         //public int Endurance { get; set; }
         //public int Dodge { get; set; }
 
+
         public FishAgent(IPropertyStorage propertyStorage)
             : base(propertyStorage)
         {
