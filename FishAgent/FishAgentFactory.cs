@@ -24,7 +24,7 @@ namespace FishAgent
         public override void RegisterWinners(List<Agent> sortedAfterDeathTime)
         {
             //Do data collection - an evolutionary algortime can be used
-        
+
         }
         public override Type ProvidedAgentType
         {

@@ -12,19 +12,19 @@ namespace FishAgent
     public class FishAgent : Agent
     {
         //state attributes - these may only be modified by framework
-        public AIVector Position { get; set; }
-        public float Hunger { get; set; }
-        public float Hitpoints { get; set; }
-        public bool Defending { get; set; }
-        public float ProcreationCountdown { get; set; }
+        //public AIVector Position { get; set; }
+        //public float Hunger { get; set; }
+        //public float Hitpoints { get; set; }
+        //public bool Defending { get; set; }
+        //public float ProcreationCountdown { get; set; }
 
 
-        public int MovementSpeed { get; set; }
-        public int Strength { get; set; }
-        public int Health { get; set; }
-        public int EyeSight { get; set; }
-        public int Endurance { get; set; }
-        public int Dodge { get; set; }
+        //public int MovementSpeed { get; set; }
+        //public int Strength { get; set; }
+        //public int Health { get; set; }
+        //public int Eyesight { get; set; }
+        //public int Endurance { get; set; }
+        //public int Dodge { get; set; }
 
         public FishAgent(IPropertyStorage propertyStorage)
             : base(propertyStorage)
@@ -32,7 +32,7 @@ namespace FishAgent
             MovementSpeed = 110;
             Strength = 0;
             Health = 50;
-            EyeSight = 70;
+            Eyesight = 70;
             Endurance = 20;
             Dodge = 0;
         }
@@ -60,7 +60,7 @@ namespace FishAgent
         }
         public override void ActionResultCallback(bool success)
         {
-            throw new NotImplementedException();
+            
         }
 
 

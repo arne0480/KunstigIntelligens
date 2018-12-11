@@ -58,7 +58,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>move "$(TargetPath)""$(SolutionDir)"GameOfLife\bin\Debug\plugins\$(TargetFileName)"
+    <PostBuildEvent>move "$(TargetPath)" "$(SolutionDir)GameOfLife\bin\Debug\plugins\$(TargetFileName)"
 move "$(TargetDir)\Icon.png" "$(SolutionDir)GameOfLife\bin\Debug\plugins\$(TargetName).png"</PostBuildEvent>
   </PropertyGroup>
 </Project>
