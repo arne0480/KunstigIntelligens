@@ -16,21 +16,28 @@ namespace ExampleAI
         //Only for randomization of movement
         float moveX = 0;
         float moveY = 0;
+        float xPos;
+        float yPos;
 
+
+        //moveX = rnd.Next(-1, 2);
+        //moveY = rnd.Next(-1, 2);
+        AIVector dirvector;
+        AIVector plantPos;
         public RandomAgent(IPropertyStorage propertyStorage)
             : base(propertyStorage)
         {
             rnd = new Random();
-            MovementSpeed = 35;
-            Strength = 35;
-            Health = 70;
-            Eyesight = 30;
-            Endurance = 25;
-            Dodge = 55;
+            MovementSpeed = 110;
+            Strength = 0;
+            Health = 50;
+            Eyesight = 70;
+            Endurance = 20;
+            Dodge = 0;
 
+            //moveX = rnd.Next(-1, 2);
+            //moveY = rnd.Next(-1, 2);
 
-            moveX = rnd.Next(-1, 2);
-            moveY = rnd.Next(-1, 2);
             string ddd = this.GetType().FullName;
         }
 
@@ -38,16 +45,32 @@ namespace ExampleAI
 
         public override IAction GetNextAction(List<IEntity> otherEntities)
         {
-
+            int action = 4;
 
             List<Agent> agents = otherEntities.FindAll(a => a is Agent).ConvertAll<Agent>(a => (Agent)a);
-            List<IEntity> plants = otherEntities.FindAll(a => a is Plant);
+            List<IEntity> plants = otherEntities.FindAll(x => x is Plant);
+
+            foreach (Plant plant in plants)
+            {
+                if (AIVector.Distance(Position, plant.Position) < AIModifiers.maxFeedingRange)
+                {
+                    //return new Feed(plant);
+                    action = 3;
+                }
+            }
+
+
+
+
+
+
+
 
 
             Agent rndAgent = null;
             rndAgent = agents[rnd.Next(agents.Count)];
 
-            switch (rnd.Next(5))
+            switch (action)
             {
                 case 1: //Procreate
                     if (rndAgent != null && rndAgent.GetType() == typeof(RandomAgent))
@@ -66,16 +89,60 @@ namespace ExampleAI
                     if (plants.Count > 0)
                     {
                         return new Feed((Plant)plants[rnd.Next(plants.Count)]);
+
                     }
                     break;
                 case 4: //Move
-                    return new Move(new AIVector(moveX, moveY));
+                    if (plants.Count > 0)
+                    {
+                        AIVector playerPos = new AIVector(agents[0].Position.X, agents[0].Position.Y);
+                        plantPos = new AIVector(plants[0].Position.X, plants[0].Position.Y);
+                        dirvector = plantPos - playerPos;
+                        return new Move(dirvector.Normalize());
+                    }
+                    else if (plants.Count <= 0)
+                    {
+
+                        
+                        
+                        if (Position.X == xPos || Position.Y == yPos)
+                        {
+                            if (moveX == -1)
+                            {
+                                moveX = 1;
+                                moveY = 1;
+                            }
+                            else
+                            {
+                                moveX = -1;
+                                moveY = -1;
+                            }
+                        }
+                        //else if (Position.X != xPos || Position.Y != yPos)
+                        //{
+                        //    moveX = 1;
+                        //    moveY = 1;
+                        //}
+
+                        //    //moveX = rnd.Next(-1, 2);
+                        //    //moveY = rnd.Next(-1, 2);
+                        xPos = Position.X;
+                        yPos = Position.Y;
+                        return new Move(new AIVector(moveX, moveY));
+
+                    }
+                    
+                    break;
+
+                //return new Move(new AIVector(moveX, moveY));
                 default:
                     return new Defend();
             }
 
-            return new Move(new AIVector(moveX, moveY));
+            //return new Move(dirvector);
 
+            return new Move(new AIVector(moveX, moveY));
+            //return new Move(new AIVector(plants[0].Position.Y, plants[0].Position.X));
         }
 
 
