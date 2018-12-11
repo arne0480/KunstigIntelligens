@@ -30,3 +30,7 @@ FishAgent/obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3\
 \.vs/GameOfLife/v15/Server/sqlite3/storage\.ide-shm
 
 \.vs/GameOfLife/v15/Server/sqlite3/storage\.ide-wal
+
+\.vs/GameOfLife/v15/\.suo
+
+*.cache
