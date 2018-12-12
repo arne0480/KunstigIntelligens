@@ -24,6 +24,7 @@ namespace FishAgent
         //moveY = rnd.Next(-1, 2);
         AIVector dirvector;
         AIVector plantPos;
+        AIVector enemyPos;
         public FishAgent(IPropertyStorage propertyStorage)
             : base(propertyStorage)
         {
@@ -88,6 +89,20 @@ namespace FishAgent
             }
 
             //move
+            //Find all enemies witin Eyesight range
+            List<IEntity> nearEnemies = otherEntities.FindAll(x => x.GetType() != typeof(FishAgent) && x is Agent && AIVector.Distance(Position, x.Position) < AIModifiers.maxMeleeAttackRange);
+            //if (nearEnemies.Count > 0)
+            //{
+            //    return new Attack((Agent)nearEnemies[0]);
+            //}
+
+            if (nearEnemies.Count > 0)
+            {
+                enemyPos = new AIVector(nearEnemies[0].Position.X, nearEnemies[0].Position.Y);
+                dirvector = Position - enemyPos;
+                return new Move(dirvector.Normalize());
+            }
+
             if (Position.X == xPos && Position.Y != yPos)
             {
                 if (moveX == 1)
@@ -106,6 +121,7 @@ namespace FishAgent
             yPos = Position.Y;
             return new Move(new AIVector(moveX, moveY));
 
+            
             //(otherEntities);
 
             //if (AIVector.Distance(Position, agents.Position) < AIModifiers.maxProcreateRange)
