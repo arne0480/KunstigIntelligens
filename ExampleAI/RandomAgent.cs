@@ -28,10 +28,10 @@ namespace ExampleAI
             : base(propertyStorage)
         {
             rnd = new Random();
-            MovementSpeed = 110;
+            MovementSpeed = 115;
             Strength = 0;
-            Health = 50;
-            Eyesight = 70;
+            Health = 25;
+            Eyesight = 90;
             Endurance = 20;
             Dodge = 0;
 
@@ -47,7 +47,17 @@ namespace ExampleAI
         {
             int action = 4;
 
+            
+
+            //if (/*AIModifiers.maxRunningTimeInSeconds*/)
+            //{
+
+            //}
+
+
             List<Agent> agents = otherEntities.FindAll(a => a is Agent).ConvertAll<Agent>(a => (Agent)a);
+            agents.Remove(this);
+
             List<IEntity> plants = otherEntities.FindAll(x => x is Plant);
 
             foreach (Plant plant in plants)
@@ -58,17 +68,34 @@ namespace ExampleAI
                     action = 3;
                 }
             }
+            //(otherEntities);
 
+            //if (AIVector.Distance(Position, agents.Position) < AIModifiers.maxProcreateRange)
+            //{
+            //    action = 1;
+            //}
 
+            foreach (Agent agent in agents)
+            {
+              
+                if (AIVector.Distance(Position, agent.Position) < AIModifiers.maxProcreateRange)
+                {
+                    action = 1;
+                }
 
+            }
 
+            //for (int i = 0; i < agents.Count; i++)
+            //{
+            //    agents.Remove(i);
+            //}
 
 
 
 
 
             Agent rndAgent = null;
-            rndAgent = agents[rnd.Next(agents.Count)];
+            //rndAgent = agents[rnd.Next(agents.Count)];
 
             switch (action)
             {
@@ -95,9 +122,9 @@ namespace ExampleAI
                 case 4: //Move
                     if (plants.Count > 0)
                     {
-                        AIVector playerPos = new AIVector(agents[0].Position.X, agents[0].Position.Y);
+                        //AIVector playerPos = new AIVector(agents[0].Position.X, agents[0].Position.Y);
                         plantPos = new AIVector(plants[0].Position.X, plants[0].Position.Y);
-                        dirvector = plantPos - playerPos;
+                        dirvector = plantPos - Position /*playerPos*/;
                         return new Move(dirvector.Normalize());
                     }
                     else if (plants.Count <= 0)

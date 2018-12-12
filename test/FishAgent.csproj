@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CF2DF1F6-8787-47B8-ACDC-2AED2FD1EC80}</ProjectGuid>
+    <ProjectGuid>{BA757468-7531-46B3-96FD-B4DB68175885}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FishAgent</RootNamespace>
-    <AssemblyName>FishAgent</AssemblyName>
+    <RootNamespace>test</RootNamespace>
+    <AssemblyName>test</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,9 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FishAgent.cs" />
     <Compile Include="FishAgentFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FishAgent.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AIFramework\AIFramework.csproj">
@@ -59,6 +58,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>move "$(TargetPath)" "$(SolutionDir)GameOfLife\bin\Debug\plugins\$(TargetFileName)"
-move "$(TargetDir)\Icon.png" "$(SolutionDir)GameOfLife\bin\Debug\plugins\$(TargetName).png"</PostBuildEvent>
+move "$(TargetDir)\Icon.png" "$(SolutionDir)GameOfLife\bin\Debug\plugins\$(TargetName).png"
+
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
