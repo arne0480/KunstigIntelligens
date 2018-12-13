@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="FishAgentFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FishAgent.cs" />
+    <Compile Include="Fish.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AIFramework\AIFramework.csproj">

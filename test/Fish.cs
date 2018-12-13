@@ -6,12 +6,14 @@ using AIFramework;
 using AIFramework.Actions;
 using AIFramework.Entities;
 using System.Diagnostics;
+using System.Timers;
 
-namespace FishAgent
+namespace Fish
 {
-    public class FishAgent : Agent
+    public class Fish : Agent
     {
         Random rnd;
+
 
         //Only for randomization of movement
         float moveX = 0;
@@ -26,15 +28,15 @@ namespace FishAgent
         AIVector plantPos;
         AIVector enemyPos;
         AIVector fishPos;
-        AIVector fishPosSecond;
-        public FishAgent(IPropertyStorage propertyStorage)
+
+        public Fish(IPropertyStorage propertyStorage)
             : base(propertyStorage)
         {
             rnd = new Random();
-            MovementSpeed = 115;
+            MovementSpeed = 135;
             Strength = 0;
             Health = 25;
-            Eyesight = 90;
+            Eyesight = 70;
             Endurance = 20;
             Dodge = 0;
 
@@ -55,6 +57,7 @@ namespace FishAgent
 
             List<Agent> agents = otherEntities.FindAll(a => a is Agent).ConvertAll<Agent>(a => (Agent)a);
             agents.Remove(this);
+            
 
             List<IEntity> plants = otherEntities.FindAll(x => x is Plant);
 
@@ -71,31 +74,29 @@ namespace FishAgent
                 plantPos = new AIVector(plants[0].Position.X, plants[0].Position.Y);
                 dirvector = plantPos - Position;
                 return new Move(dirvector.Normalize());
+
+
             }
 
             //sex
+
             if (ProcreationCountDown == 0)
             {
                 foreach (Agent agent in agents)
                 {
-
                     if (AIVector.Distance(Position, agent.Position) < AIModifiers.maxProcreateRange)
                     {
                         if (agent.ProcreationCountDown == 0)
                         {
                             return new Procreate(agent);
                         }
-                        fishPos = new AIVector(agents[0].Position.X, agents[0].Position.Y);
-                        dirvector = fishPos - Position;
-                        return new Move(dirvector.Normalize());
                     }
-
                 }
             }
 
             //move
             //Find all enemies witin Eyesight range
-            List<IEntity> nearEnemies = otherEntities.FindAll(x => x.GetType() != typeof(FishAgent) && x is Agent && AIVector.Distance(Position, x.Position) < AIModifiers.maxMeleeAttackRange);
+            List<IEntity> nearEnemies = otherEntities.FindAll(x => x.GetType() != typeof(Fish) && x is Agent && AIVector.Distance(Position, x.Position) < AIModifiers.maxMeleeAttackRange);
             //if (nearEnemies.Count > 0)
             //{
             //    return new Attack((Agent)nearEnemies[0]);
@@ -103,10 +104,16 @@ namespace FishAgent
 
             if (nearEnemies.Count > 0)
             {
-                enemyPos = new AIVector(nearEnemies[0].Position.X, nearEnemies[0].Position.Y);
-                dirvector = Position - enemyPos;
-                return new Move(dirvector.Normalize());
+                //enemyPos = new AIVector(nearEnemies[0].Position.X, nearEnemies[0].Position.Y);
+                // dirvector = Position - enemyPos;
+                // return new Move(dirvector.Normalize());
+
+                moveX = rnd.Next(-1, 2);
+                moveY = rnd.Next(-1, 2);
+                return new Move(new AIVector(moveX, moveY));
             }
+
+      
 
             if (Position.X == xPos && Position.Y != yPos)
             {
@@ -124,6 +131,9 @@ namespace FishAgent
             }
             xPos = Position.X;
             yPos = Position.Y;
+
+
+
             return new Move(new AIVector(moveX, moveY));
 
 
@@ -149,14 +159,14 @@ namespace FishAgent
             //switch (action)
             //{
             //    case 1: //Procreate
-            //        if (rndAgent != null && rndAgent.GetType() == typeof(FishAgent))
+            //        if (rndAgent != null && rndAgent.GetType() == typeof(Fish))
             //        {
             //            return new Procreate(rndAgent);
             //        }
             //        break;
 
             //    case 2: //Attack Melee
-            //        if (rndAgent != null && rndAgent.GetType() != typeof(FishAgent))
+            //        if (rndAgent != null && rndAgent.GetType() != typeof(Fish))
             //        {
             //            return new Attack(rndAgent);
             //        }

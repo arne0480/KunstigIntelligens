@@ -7,25 +7,25 @@ using AIFramework.Entities;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace FishAgent
+namespace Fish
 
 
 {
-    public class FishAgentFactory : AgentFactory
+    public class FishFactory : AgentFactory
     {
         public override Agent CreateAgent(IPropertyStorage propertyStorage)
         {
-            return new FishAgent(propertyStorage);
+            return new Fish(propertyStorage);
         }
 
         public override Agent CreateAgent(Agent parent1, Agent parent2, IPropertyStorage propertyStorage)
         {
-            return new FishAgent(propertyStorage);
+            return new Fish(propertyStorage);
         }
 
         public override Type ProvidedAgentType
         {
-            get { return typeof(FishAgent); }
+            get { return typeof(Fish); }
         }
 
         public override string Creators
