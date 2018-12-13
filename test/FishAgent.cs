@@ -25,6 +25,8 @@ namespace FishAgent
         AIVector dirvector;
         AIVector plantPos;
         AIVector enemyPos;
+        AIVector fishPos;
+        AIVector fishPosSecond;
         public FishAgent(IPropertyStorage propertyStorage)
             : base(propertyStorage)
         {
@@ -83,8 +85,11 @@ namespace FishAgent
                         {
                             return new Procreate(agent);
                         }
-                        
+                        fishPos = new AIVector(agents[0].Position.X, agents[0].Position.Y);
+                        dirvector = fishPos - Position;
+                        return new Move(dirvector.Normalize());
                     }
+
                 }
             }
 
@@ -121,7 +126,7 @@ namespace FishAgent
             yPos = Position.Y;
             return new Move(new AIVector(moveX, moveY));
 
-            
+
             //(otherEntities);
 
             //if (AIVector.Distance(Position, agents.Position) < AIModifiers.maxProcreateRange)
@@ -189,30 +194,30 @@ namespace FishAgent
             //            }
 
 
-                        //if (Position.X == xPos || Position.Y == yPos)
-                        //{
-                        //    if (moveX == -1)
-                        //    {
-                        //        moveX = 1;
-                        //        moveY = 1;
-                        //    }
-                        //    else
-                        //    {
-                        //        moveX = -1;
-                        //        moveY = -1;
-                        //    }
-                        //}
-                        //else if (Position.X != xPos || Position.Y != yPos)
-                        //{
-                        //    moveX = 1;
-                        //    moveY = 1;
-                        //}
+            //if (Position.X == xPos || Position.Y == yPos)
+            //{
+            //    if (moveX == -1)
+            //    {
+            //        moveX = 1;
+            //        moveY = 1;
+            //    }
+            //    else
+            //    {
+            //        moveX = -1;
+            //        moveY = -1;
+            //    }
+            //}
+            //else if (Position.X != xPos || Position.Y != yPos)
+            //{
+            //    moveX = 1;
+            //    moveY = 1;
+            //}
 
-                        //    //moveX = rnd.Next(-1, 2);
-                        //    //moveY = rnd.Next(-1, 2);
-                        //xPos = Position.X;
-                        //yPos = Position.Y;
-                        //return new Move(new AIVector(moveX, moveY));
+            //    //moveX = rnd.Next(-1, 2);
+            //    //moveY = rnd.Next(-1, 2);
+            //xPos = Position.X;
+            //yPos = Position.Y;
+            //return new Move(new AIVector(moveX, moveY));
 
             //        }
 
